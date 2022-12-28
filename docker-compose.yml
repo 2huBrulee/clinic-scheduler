@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  db:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - .env
+
+  nats:
+    image: bitnami/nats:latest
+    ports:
+      - "4222:4222"
+    volumes:
+      - ./configs/nats-server.conf:/bitnami/nats/conf/nats-server.conf:ro
+
+volumes:
+  mongo-data:
